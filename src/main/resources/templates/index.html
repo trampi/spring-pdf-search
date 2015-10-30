@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+        <title>PDF-Suche</title>
+    
+        <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    </head>
+    
+    <body ng-app="search">
+        <div class="container" ng-controller="searchController">
+            <h1>PDF-Protokoll-Suche</h1>
+            
+            <p>Es sind <span th:text="${documentCount}">123</span> Dokumente indexiert.</p>
+            
+            <div class="row">
+                <div class="col-md-9">
+                    <input placeholder="Suchbegriff (z.B. ZPA)" type="text" class="form-control" ng-model="search.text" ng-model-options="{debounce: 500}" />
+                    <label><input type="checkbox" ng-model="search.fuzzy" /> Fuzzy-Suche</label>
+                    <div ng-if="search.text">
+                        {{result.hits.total}} Treffer für {{result.search_query}}
+                        
+                        <ul>
+                            <li ng-repeat="hit in result.hits.hits">
+                                {{hit.fields.title[0]}}
+                                <ul>
+                                    <li ng-repeat="subhit in hit.highlight.file">
+                                        <span ng-bind-html="explicitlyTrustedHtml(subhit)"></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <form action="/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" multiple="multiple" name="documents[]" />
+                        <input type="submit" />
+                    </form>
+                </div>
+            </div>
+        
+            <button ng-if="search.text" class="btn btn-default" type="button" data-toggle="collapse" data-target="#resultJson">
+                Zeige JSON-Ergebnis
+            </button>
+            <div id="resultJson" class="collapse">
+                <pre>{{result | json}}</pre>
+            </div>
+        </div>
+        
+        <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="vendor/angular/angular.js"></script>
+        <script src="app.js"></script>
+    
+    </body>
+</html>
