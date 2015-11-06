@@ -1,13 +1,25 @@
 {
-  "properties" : {
-    "file" : {
-      "type" : "attachment",
-      "fields" : {
-        "file" : {"store": true, "term_vector":"with_positions_offsets", "type": "string"},
-        "title" : {"store" : "yes"},
-        "date" : {"store" : "yes"},
-        "content_type" : {"store" : "yes"},
-        "content_length" : {"store" : "yes"}
+  "properties": {
+    "file": {
+      "type": "attachment",
+      "fields": {
+        "file": {
+          "store": true,
+          "term_vector": "with_positions_offsets",
+          "type": "string"
+        },
+        "title": {
+          "store": "yes"
+        },
+        "date": {
+          "store": "yes"
+        },
+        "content_type": {
+          "store": "yes"
+        },
+        "content_length": {
+          "store": "yes"
+        }
       }
     }
   }

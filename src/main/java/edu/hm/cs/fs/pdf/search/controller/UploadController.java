@@ -13,19 +13,19 @@ import java.util.List;
 
 @Controller
 public class UploadController {
-    
+
     @Autowired
     SearchService elasticsearch;
-    
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String uploadDocuments(@RequestParam("documents[]") final List<MultipartFile> files) throws IOException {
         for (MultipartFile file : files) {
-            if ( ! file.isEmpty()) {
+            if (!file.isEmpty()) {
                 elasticsearch.indexFile(file.getOriginalFilename(), file.getBytes());
             }
         }
         elasticsearch.refreshIndex();
         return "redirect:/";
     }
-    
+
 }

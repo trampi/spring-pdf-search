@@ -1,5 +1,5 @@
 angular.module("search", [])
-    .controller("searchController", function($scope, $log, $http, $sce) {
+    .controller("searchController", function ($scope, $log, $http, $sce) {
 
         $scope = angular.extend($scope, {
             search: {
@@ -11,7 +11,7 @@ angular.module("search", [])
         $scope.explicitlyTrustedHtml = $sce.trustAsHtml;
         $scope.$watch("search.fuzzy", runSearch);
         $scope.$watch("search.text", runSearch);
-        
+
         function runSearch() {
             var searchQuery = $scope.search.text;
             var fuzzy = $scope.search.fuzzy;
@@ -21,11 +21,11 @@ angular.module("search", [])
                     q: searchQuery,
                     fuzzy: fuzzy
                 }
-            }).then(function(result) {
+            }).then(function (result) {
                 $scope.result = result.data;
                 $scope.result.search_query = searchQuery;
                 $scope.result.search_fuzzy = fuzzy;
             });
         }
-        
+
     });

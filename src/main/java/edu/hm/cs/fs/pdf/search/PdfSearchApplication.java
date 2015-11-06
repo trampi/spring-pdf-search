@@ -29,13 +29,13 @@ public class PdfSearchApplication {
 
     @Value("${pdf-search.type}")
     private String type;
-    
+
     private Node node;
-    
+
     public static void main(String[] args) {
         SpringApplication.run(PdfSearchApplication.class, args);
     }
-    
+
     @Bean
     public Node node() {
         Settings settings = ImmutableSettings.settingsBuilder()
@@ -47,17 +47,17 @@ public class PdfSearchApplication {
                 .node();
         return node;
     }
-    
+
     @PreDestroy
     public void shutdownNode() {
         node.close();
     }
-    
+
     @Bean
     public Client client(Node node) {
         return node.client();
     }
-    
+
     @Autowired
     public void createIndex(Client client) throws IOException {
         dropIndexIfExists(client);

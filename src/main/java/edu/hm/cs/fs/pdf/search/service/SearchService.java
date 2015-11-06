@@ -24,18 +24,18 @@ public class SearchService {
 
     @Value("${pdf-search.type}")
     private String type;
-    
+
     private final Client client;
 
     @Autowired
     public SearchService(Client client) {
         this.client = client;
     }
-    
+
     public void indexFile(String title, InputStream inputStream) throws IOException {
         indexFile(title, IOUtils.toByteArray(inputStream));
     }
-    
+
     public void indexFile(String title, byte[] file) throws IOException {
         client.prepareIndex(index, type, title)
                 .setSource(jsonBuilder()

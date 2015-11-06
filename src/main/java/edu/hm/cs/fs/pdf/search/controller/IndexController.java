@@ -17,16 +17,16 @@ import java.io.IOException;
 
 @Controller
 public class IndexController {
-    
+
     @Autowired
     private SearchService searchService;
-    
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     String index(Model model) {
         model.addAttribute("documentCount", searchService.getDocumentCount());
         return "index";
     }
-    
+
     @RequestMapping("/search")
     @ResponseBody
     String result(@RequestParam("q") String search, @RequestParam("fuzzy") boolean fuzzy) throws IOException {
